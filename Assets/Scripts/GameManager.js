@@ -1,5 +1,7 @@
 ﻿#pragma strict
 import System.Collections.Generic;
+import UnityEngine.SceneManagement;
+import UnityEngine.UI;
 
 
 public class GameManager extends MonoBehaviour {
@@ -14,6 +16,8 @@ public class GameManager extends MonoBehaviour {
     private enum GameState{Playing,End};
     private var currentGameState : GameState;
     private var counter : int;
+    public var timeAfterScore : float;
+    public var finishedMessage : Text;
 
     function Awake () {
         Debug.Log("Game is awake!");
@@ -28,6 +32,8 @@ public class GameManager extends MonoBehaviour {
         elapsedTime = 0;
         counter = 0;
         currentGameState = GameState.Playing;
+        timeAfterScore = 5.0f;
+        finishedMessage.text = "";
         InitGame();
     }
 
@@ -68,9 +74,20 @@ public class GameManager extends MonoBehaviour {
                 if(elapsedTime >= timer){
                     Debug.Log("Oh noes you ran out of time!");
                     outOfTime = true;
-                    currentGameState = GameState.End;
+                    if(currentGameState == GameState.Playing){
+                        //disable all items
+                        for(var object : GameObject in listOfObjects){
+                            if(null != object ){
+                              object.SetActive(false);
+                            }
+                        }
+                finishedMessage.text="You masticated " + counter + " objects in " + timer + " seconds!";
+                    }
+                    if(elapsedTime - timer >= timeAfterScore){
+                        currentGameState = GameState.End;
+                    }
                 }
-                Debug.Log(listOfObjects[counter].transform.GetChild(0).gameObject.GetComponent(Masticatable).masticated);
+                //Debug.Log(listOfObjects[counter].transform.GetChild(0).gameObject.GetComponent(Masticatable).masticated);
                 if(listOfObjects[counter].transform.GetChild(0).gameObject.GetComponent(Masticatable).masticated == true){
                     //the objected has been masticated, delete it generate the next object
                     Destroy(listOfObjects[counter],1);
@@ -82,6 +99,9 @@ public class GameManager extends MonoBehaviour {
 
                 break;
             case GameState.End :
+                if(Input.GetMouseButton(0)){
+                    SceneManager.LoadScene("MenuScreen");
+                }
                 break;
         }
     }

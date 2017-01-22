@@ -107,8 +107,9 @@ public class CucumberRubbingBehaviour extends Masticatable{
     }
 
     function DrawPulsation(){
-        rand = Random.Range(0,1);
-        transform.localRotation = Quaternion.Slerp(transform.rotation,wiggleDestination,rand);
+        //rand = Random.Range(0,1);
+        //transform.localRotation = Quaternion.Slerp(transform.rotation,wiggleDestination,rand);
+        this.GetComponent(ParticleSystem).Play();
         if(transform.localScale.magnitude >= (normalSize.magnitude *1.09)){
             transform.localScale = Vector3.Lerp(transform.localScale, normalSize, 10 *pulsationIntensity* Time.deltaTime);
         }

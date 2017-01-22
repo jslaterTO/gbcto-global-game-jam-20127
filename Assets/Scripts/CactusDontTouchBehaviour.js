@@ -8,6 +8,9 @@ public class CactusDontTouchBehaviour extends Masticatable{
     private var rand : float;
     public var timeToLive : float;
     private var lived : float;
+    public var messageDelay : float;
+    public var messageUI : GameObject[];
+
 
     //object instatiation
     function Start(){
@@ -15,7 +18,8 @@ public class CactusDontTouchBehaviour extends Masticatable{
         score = 0;
         masticated = false;
         currentObjectState = ObjectState.Entering;
-        timeToLive = 0.1f;
+        timeToLive = 0.2f;
+        messageDelay = 2.5f;
     }
 
     //event listener
@@ -48,6 +52,10 @@ public class CactusDontTouchBehaviour extends Masticatable{
         //every frame countdown to end of time to live
 
         if(touched){
+            messageUI = GameObject.FindGameObjectsWithTag("UI");
+            //var sendMessage : UIChat;
+            //sendMessage =  messageUI.GetComponent("UIChat");
+            //sendAMessage.AddMessage("Ouch! Prickly...",true);
             //hurt animation
         }
 
