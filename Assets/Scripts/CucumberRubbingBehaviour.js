@@ -21,7 +21,7 @@ public class CucumberRubbingBehaviour extends Masticatable{
         pulsationIntensity = 1.0f;
         wiggleDestination = Quaternion.Euler(180,180,180);
         currentObjectState = ObjectState.Entering;
-        scoreNeeded = 100;
+        scoreNeeded = 150;
     }
 
     //event listener

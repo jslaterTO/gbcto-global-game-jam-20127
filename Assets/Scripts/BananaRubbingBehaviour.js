@@ -73,7 +73,7 @@ public class BananaRubbingBehaviour extends Masticatable{
             //make object enter the scene
             AnimateEntrance();
             //the object is in place, begin playable phase
-            if((transform.position - Vector3(0,0,0)).magnitude <= 0.01){
+            if((transform.position - Vector3(0,1,0)).magnitude <= 0.01){
                 currentObjectState = ObjectState.Playable;
             }
         }
@@ -99,11 +99,11 @@ public class BananaRubbingBehaviour extends Masticatable{
 
     //animations down here
     function AnimateMasticated(){
-        transform.position = Vector3.Lerp(transform.position, Vector3(-30,0,0), 6* Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, Vector3(-30,1,0), 6* Time.deltaTime);
     }
 
     function AnimateEntrance(){
-        transform.position = Vector3.Lerp(transform.position,Vector3(0,0,0),4* Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position,Vector3(0,1,0),4* Time.deltaTime);
     }
 
     function DrawPulsation(){
@@ -113,7 +113,7 @@ public class BananaRubbingBehaviour extends Masticatable{
             transform.localScale = Vector3.Lerp(transform.localScale, normalSize, 10 *pulsationIntensity* Time.deltaTime);
         }
         else if(transform.localScale.magnitude <= (normalSize.magnitude *1.01)){
-            transform.localScale = Vector3.Lerp(transform.localScale, normalSize * 1.1, 60 * pulsationIntensity* Time.deltaTime);
+            transform.localScale = Vector3.Lerp(transform.localScale, Vector3(normalSize.x * 1.1,normalSize.y *1.2, normalSize.z), 60 * pulsationIntensity* Time.deltaTime);
         }
     }
 }

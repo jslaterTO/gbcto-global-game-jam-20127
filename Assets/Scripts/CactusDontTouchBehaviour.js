@@ -7,6 +7,7 @@ public class CactusDontTouchBehaviour extends Masticatable{
     private var rend : Renderer;
     private var rand : float;
     public var timeToLive : float;
+    private var lived : float;
 
     //object instatiation
     function Start(){
@@ -14,7 +15,7 @@ public class CactusDontTouchBehaviour extends Masticatable{
         score = 0;
         masticated = false;
         currentObjectState = ObjectState.Entering;
-        timeToLive = 0.3f;
+        timeToLive = 0.1f;
     }
 
     //event listener
@@ -52,15 +53,23 @@ public class CactusDontTouchBehaviour extends Masticatable{
 
         switch(currentObjectState){
             case ObjectState.Entering:
-
+                transform.position = Vector3.Lerp(transform.position,Vector3(0,0,0),8* Time.deltaTime);
+                //the object is in place, begin playable phase
+                if((transform.position - Vector3(0,0,0)).magnitude <= 0.01){
+                    currentObjectState = ObjectState.Playable;
+                }
                 break;
 
             case ObjectState.Playable:
-
+                lived += Time.deltaTime;
+                if(lived >= timeToLive){
+                    currentObjectState = ObjectState.Exiting;
+                }
                 break;
 
             case ObjectState.Exiting:
-
+                masticated = true;
+                transform.position = Vector3.Lerp(transform.position, Vector3(-30,0,0), 8* Time.deltaTime);
                 break;
         }
     }
